@@ -1,0 +1,52 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arama Sonuçları</title>
+</head>
+<body>
+    <h1>Arama Sonuçları: {{ query }}</h1>
+    <h2>Web Sayfaları:</h2>
+    <ul>
+        {% for publication in publications %}
+            {% if not publication['link'].endswith('.pdf') %}
+                <li><a href="{{ publication['link'] }}">{{ publication['baslik'] }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <h2>PDF İndirme Bağlantıları:</h2>
+    <ul>
+        {% for publication in publications %}
+            <li>
+                <a href="/download_pdf?query={{ query }}&title={{ publication['baslik'] }}&link={{ publication['link'] }}">PDF İndir: {{ publication['baslik'] }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <h1>Search Results for "{{ query }}"</h1>
+    <h2>Publications from MongoDB:</h2>
+    <ul>
+        {% for publication in publications %}
+            <li>
+                <pre>{{ publication }}</pre>
+                <h3>{{ publication['baslik'] }}</h3>
+                <p>Yazarlar: 
+                    {% if publication.get('yazarlar') %}
+                        {{ publication['yazarlar'] }}
+                    {% else %}
+                        Yazar bilgisi yok
+                    {% endif %}
+                </p>               
+                <p>Yayın Türü: {{ publication['yayin_turu'] }}</p>
+                <p>Yayın Yılı: {{ publication['yayin_yili'] }}</p>
+                <p>Yayıncı: {{ publication['yayinci'] }}</p>
+                <p>Anahtar Kelimeler: {{ publication['anahtar_kelimeler'] }}</p>
+                <p>Özet: {{ publication['ozet'] }}</p>
+                <p>Alıntı Sayısı: {{ publication['alinti_sayisi'] }}</p>
+                <p>DOI: {{ publication['doi'] }}</p>
+                <a href="{{ publication['link'] }}">Detaylar</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>    

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Arama</title>
+</head>
+<body>
+    <h1>Arama Uygulaması</h1>
+    <form action="/search" method="GET">
+        <input type="text" name="query" placeholder="Arama yapın...">
+        <button type="submit">Ara</button>
+    </form>
+    <h2>Tüm Yayınlar</h2>
+    <ul>
+        {% for publication in publications %}
+            <li>
+                <h3>{{ publication['baslik'] }}</h3>
+                <p>Yazarlar: 
+                    {% if publication['yazarlar'] %}
+                        {{ publication['yazarlar'] }}
+                    {% else %}
+                        Yazar bilgisi yok
+                    {% endif %}
+                </p>               
+                <p>Yayın Türü: {{ publication['yayin_turu'] }}</p>
+                <p>Yayın Yılı: {{ publication['yayin_yili'] }}</p>
+                <p>Yayıncı: {{ publication['yayinci'] }}</p>
+                <p>Anahtar Kelimeler: {{ publication['anahtar_kelimeler'] }}</p>
+                <p>Özet: {{ publication['ozet'] }}</p>
+                <p>Alıntı Sayısı: {{ publication['alinti_sayisi'] }}</p>
+                <p>DOI: {{ publication['doi'] }}</p>
+                <a href="{{ publication['link'] }}">Detaylar</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
